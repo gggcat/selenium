@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  selenium:
+    container_name: selenium-dispshell
+    build:
+      context: .
+      dockerfile: selenium-dispshell.Dockerfile
+    tty: true
+
+  build:
+    image: zzzcat/dispshell:docker
+    tty: true
+    working_dir: /work
+    command: bash push-dockerhub.sh
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - .:/work/.:ro
+    environment:
+      DOCKERHUB_USER: ${DOCKERHUB_USER}
+      DOCKERHUB_PASS: ${DOCKERHUB_PASS}
